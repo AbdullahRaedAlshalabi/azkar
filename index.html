@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>أذكار الصباح والمساء - حصن المسلم</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(145deg, #0b3b2a 0%, #1a6e4a 100%);
+            font-family: 'Segoe UI', 'Cairo', 'Amiri', 'Tahoma', system-ui, sans-serif;
+            padding: 1.5rem 1rem;
+            min-height: 100vh;
+        }
+
+        .choice-screen {
+            max-width: 550px;
+            margin: 8vh auto 0;
+            text-align: center;
+            background: rgba(255, 252, 240, 0.98);
+            border-radius: 72px;
+            padding: 2rem 1.8rem;
+            box-shadow: 0 35px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .choice-screen h1 {
+            color: #1f6046;
+            font-size: 2.3rem;
+            margin-bottom: 0.6rem;
+            font-weight: 800;
+        }
+
+        .choice-screen p {
+            color: #7b5a3b;
+            margin-bottom: 2rem;
+            font-size: 1.15rem;
+        }
+
+        .choice-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1.3rem;
+        }
+
+        .choice-btn {
+            background: #f2bc6b;
+            border: none;
+            padding: 1rem;
+            font-size: 1.6rem;
+            font-weight: bold;
+            border-radius: 80px;
+            color: #2a462a;
+            cursor: pointer;
+            transition: 0.1s linear;
+            font-family: inherit;
+            box-shadow: 0 8px 0 #9b693d;
+        }
+
+        .choice-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 3px 0 #9b693d;
+        }
+
+        .dhikr-container {
+            max-width: 820px;
+            margin: 0 auto;
+            display: none;
+        }
+
+        .section-title {
+            text-align: center;
+            color: #fffae9;
+            font-size: 2rem;
+            margin: 0.2rem 0 1.5rem;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.25);
+            font-weight: bold;
+        }
+
+        .back-home {
+            background: #c9aa6b;
+            color: white;
+            padding: 0.6rem 1.6rem;
+            border-radius: 60px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            transition: 0.1s linear;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        .back-home:active {
+            transform: scale(0.97);
+        }
+
+        .dhikr-card {
+            background: #fffffb;
+            border-radius: 42px;
+            padding: 1.3rem 1.4rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 12px 22px rgba(0, 0, 0, 0.12);
+            border-right: 8px solid #e9bf7e;
+        }
+
+        .dhikr-text {
+            font-size: 1.28rem;
+            line-height: 1.85rem;
+            font-family: 'Amiri', 'Traditional Arabic', serif;
+            color: #194d38;
+            background: #fefae9;
+            padding: 1rem;
+            border-radius: 32px;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .counter-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            background: #efe4cf;
+            padding: 0.5rem 1rem;
+            border-radius: 100px;
+        }
+
+        .count-btn {
+            background: #e2af62;
+            border: none;
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            font-size: 2.1rem;
+            font-weight: bold;
+            color: #2f4225;
+            cursor: pointer;
+            transition: 0.05s linear;
+            font-family: monospace;
+            box-shadow: 0 6px 0 #8b5e2c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .count-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #8b5e2c;
+        }
+
+        .check-complete {
+            background: #31946b;
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.7rem;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .virtue-text {
+            background: #e2d3b6;
+            padding: 0.3rem 1.2rem;
+            border-radius: 60px;
+            font-size: 0.78rem;
+            color: #4f3e22;
+            flex: 1;
+            text-align: center;
+            line-height: 1.4rem;
+        }
+
+        @media (max-width: 620px) {
+            .dhikr-text { font-size: 1.05rem; line-height: 1.6rem; }
+            .count-btn, .check-complete { width: 60px; height: 60px; font-size: 1.7rem; }
+            .virtue-text { font-size: 0.7rem; }
+        }
+
+        @media (max-width: 480px) {
+            .virtue-text { width: 100%; margin-top: 5px; }
+            .counter-row { justify-content: center; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: #ecf7df;
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+<div id="choiceScreen" class="choice-screen">
+    <h1>📖 أذكار اليوم</h1>
+    <p>اختر القسم الذي تود تلاوته</p>
+    <div class="choice-buttons">
+        <button class="choice-btn" onclick="showMorning()">☀️ أذكار الصباح</button>
+        <button class="choice-btn" onclick="showEvening()">🌙 أذكار المساء</button>
+    </div>
+</div>
+
+<!-- ======================= قسم الصباح ======================= -->
+<div id="morningSection" class="dhikr-container">
+    <div style="text-align: center;">
+        <button class="back-home" onclick="goHome()">🏠 العودة للاختيار</button>
+        <div class="section-title">🌸 أذكار الصباح 🌸</div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text"> أَعُوذُ بِاللهِ مِنَ الشَّيْطَانِ الرَّجِيم <br>
+            اللّهُ لاَ إِلَـهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ لاَ تَأْخُذُهُ سِنَةٌ وَلاَ نَوْمٌ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الأَرْضِ مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلاَّ بِإِذْنِهِ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ وَلاَ يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلاَّ بِمَا شَاءَ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالأَرْضَ وَلاَ يَؤُودُهُ حِفْظُهُمَا وَهُوَ الْعَلِيُّ الْعَظِيمُ. </div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="1" data-max="1"><button class="count-btn" onclick="decrementCount(this)">١</button></div>
+            <div class="virtue-text">(من قالها حين يصبح أجير من الجن حتى يمسي) رواه النسائي في عمل اليوم والليلة، وصححه الألباني في السلسلة الصحيحة ٣/٦٧</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text"> بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم <br> قُلْ هُوَ اللَّهُ أَحَدٌ، اللَّهُ الصَّمَدُ، لَمْ يَلِدْ وَلَمْ يُولَدْ، وَلَمْ يَكُنْ لَّهُ كُفُوًا أَحَدٌ. </div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="3" data-max="3"><button class="count-btn" onclick="decrementCount(this)">٣</button></div>
+            <div class="virtue-text">(تعدل ثلث القرآن) رواه مسلم، ٤/١٨٨٧، برقم ٢٥٧٦</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text"> بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم<br> قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ، مِنْ شَرِّ مَا خَلَقَ، وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ، وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ، وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ. </div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="3" data-max="3"><button class="count-btn" onclick="decrementCount(this)">٣</button></div>
+            <div class="virtue-text">(حصن من الشرور) رواه النسائي في عمل اليوم والليلة، وصححه الألباني</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text"> بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم <br> قُلْ أَعُوذُ بِرَبِّ النَّاسِ، مَلِكِ النَّاسِ، إِلَهِ النَّاسِ، مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ، الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ، مِنَ الْجِنَّةِ وَ النَّاسِ. </div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="3" data-max="3"><button class="count-btn" onclick="decrementCount(this)">٣</button></div>
+            <div class="virtue-text">(تحفظك من شر الوسواس الخناس) رواه النسائي في عمل اليوم والليلة</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">أَصْـبَحْنَا وَأَصْـبَحَ المُـلْكُ لله وَالحَمْدُ لله، لاَ إِلَهَ إِلاَّ اللّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ المُـلْكُ وَلَهُ الحَمْـدُ، وهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ. رَبِّ أسْـأَلُـكَ خَـيْرَ مَا فِي هَـذَا اليَوْمِ وَخَـيْرَ مَا بَعْـدَهُ، وَأَعُـوذُ بِكَ مِنْ شَـرِّ مَا فِي هَـذَا اليَوْمِ وَشَرِّ مَا بَعْـدَهُ، رَبِّ أَعُـوذُ بِكَ مِنَ الْكَسَـلِ وَسُـوءِ الْكِـبَرِ، رَبِّ أَعُـوذُ بِكَ مِنْ عَـذَابٍ فِي النَّـارِ وَعَـذَابٍ فِي القَـبْرِ.</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="1" data-max="1"><button class="count-btn" onclick="decrementCount(this)">١</button></div>
+            <div class="virtue-text">(خير الدنيا والآخرة) رواه مسلم، ٤/ ٢٠٨٨، برقم ٢٧٢٣</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">اللَّهُـمَّ بِكَ أَصْـبَحْنَا وَبِكَ أَمْسَـيْنَا، وَبِكَ نَحْـيَا وَبِكَ نَمُـوتُ وَإِلَـيْكَ النُّـشُورُ.</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="1" data-max="1"><button class="count-btn" onclick="decrementCount(this)">١</button></div>
+            <div class="virtue-text">(بدء اليوم بذكر الله) رواه الترمذي، ٤/١٤٢، برقم ٣٣٩١، وأبو داود، برقم ٥٠٦٨، وابن ماجه، برقم ٣٨٦٨، وصححه الألباني</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">اللَّهُمَّ أَنْتَ رَبِّي لاَ إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي، فَإِنَّهُ لاَ يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ.</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="1" data-max="1"><button class="count-btn" onclick="decrementCount(this)">١</button></div>
+            <div class="virtue-text">(من قالها موقناً حين يصبح فمات في يومه دخل الجنة) رواه البخاري، ٧/١٥٠، برقم ٦٣٠٦</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">اللَّهُـمَّ إِنِّـي أَصْبَـحْتُ أُشْـهِدُكَ، وَأُشْـهِدُ حَمَلَـةَ عَـرْشِـكَ، وَمَلائِكَتَكَ، وَجَمِـيعَ خَلْـقِكَ، أَنَّـكَ أَنْـتَ اللهُ لاَ إِلَهَ إلاَّ أَنْـتَ وَحْـدَكَ لاَ شَرِيكَ لَـكَ، وَأَنَّ مُحَمَّـداً عَبْـدُكَ وَرَسُـولُـكَ.</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="4" data-max="4"><button class="count-btn" onclick="decrementCount(this)">٤</button></div>
+            <div class="virtue-text">(من قالها حين يصبح 4 مرات أعتقه الله من النار) رواه أحمد، ٤/٣٧١، وأبو داود، برقم ٥٠٦٩، وابن حبان، وصححه الألباني في صحيح الجامع، ٤/٢٠٨</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">اللَّهُـمَّ مَا أَصْبَـحَ بِي مِـنْ نِعْـمَةٍ أَوْ بِأَحَـدٍ مِـنْ خَلْـقِكَ، فَمِـنْكَ وَحْـدَكَ لاَ شَرِيكَ لَـكَ، فَلَـكَ الْحَمْـدُ وَلَـكَ الشُّكْـرُ.</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="1" data-max="1"><button class="count-btn" onclick="decrementCount(this)">١</button></div>
+            <div class="virtue-text">(من قالها حين يصبح فقد أدى شكر يومه) رواه أبو داود، برقم ٥٠٧٣، والنسائي في عمل اليوم والليلة، رقم ٢١، وصححه ابن حبان</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لاَ إِلَهَ إِلاَّ أَنْتَ.</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="3" data-max="3"><button class="count-btn" onclick="decrementCount(this)">٣</button></div>
+            <div class="virtue-text">(صحة وعافية) رواه أبو داود، ٤/ ٣٢٤، برقم ٥٠٩٢، وأحمد، ٥/ ٤٢، برقم ٢٠٤٣٠، والنسائي في عمل اليوم والليلة، برقم ٢٢، وابن السني، برقم ٦٩، والبخاري في الأدب المفرد، برقم ٧٠١، وحسّن العلامة ابن باز رحمه الله إسناده في تحفة الأخيار، ص٢٦</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">حَسْبِيَ اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ، عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="7" data-max="7"><button class="count-btn" onclick="decrementCount(this)">٧</button></div>
+            <div class="virtue-text">(كفاه الله ما أهمه من أمر الدنيا والآخرة) رواه أبو داود، برقم ٥٠٨١، وابن السني، برقم ٧١، وصححه الألباني في صحيح الجامع، ٣/٢٦٤</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">اللَّهُـمَّ إِنِّـي أسْـأَلُـكَ العَـفْوَ وَالعَـافِـيَةَ فِي الدُّنْـيَا وَالآخِـرَةِ، اللَّهُـمَّ إِنِّـي أسْـأَلُـكَ العَـفْوَ وَالعَـافِـيَةَ فِي دِينِي وَدُنْـيَايَ وَأهْـلِي وَمَالِـي، اللَّهُـمَّ اسْتُـرْ عَـوْرَاتِي وَآمِـنْ رَوْعَاتِـي، اللَّهُـمَّ احْفَظْـنِي مِنْ بَـيْنِ يَدَيَّ وَمِنْ خَلْفِـي وَعَنْ يَمِـينِي وَعَنْ شِمَـالِي، وَمِنْ فَوْقِـي، وَأَعُـوذُ بِعَظَمَـتِكَ أَنْ أُغْـتَالَ مِنْ تَحْتِـي.</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="1" data-max="1"><button class="count-btn" onclick="decrementCount(this)">١</button></div>
+            <div class="virtue-text">(حفظ شامل) رواه أبو داود، برقم ٥٠٧٤، وابن ماجه، برقم ٣٨٧١، وانظر: صحيح ابن ماجه، ٢/٣٣٢</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">اللَّهُـمَّ عَالِـمَ الغَـيْبِ وَالشّـهَادَةِ فَاطِـرَ السَّمَاوَاتِ وَالأَرْضِ رَبَّ كُـلِّ شَـيْءٍ وَمَلِيـكَهُ، أَشْهَـدُ أَنْ لاَ إِلَـهَ إِلاَّ أَنْتَ، أَعُـوذُ بِكَ مِنْ شَـرِّ نَفْسِـي وَمِنْ شَـرِّ الشَّيْـطَانِ وَشِـرْكِهِ، وَأَنْ أَقْتَـرِفَ عَلَـى نَفْسِـي سُوأً أَوْ أَجُـرَّهُ إِلَـى مُسْـلِمٍ.</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="1" data-max="1"><button class="count-btn" onclick="decrementCount(this)">١</button></div>
+            <div class="virtue-text">(حصن عظيم) رواه الترمذي، برقم ٣٣٩٢، وأبو داود، برقم ٥٠٦٧، وانظر: صحيح الترمذي، ٣/١٤٢</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">بِسـمِ اللهِ الذِي لاَ يَضُـرُّ مَعَ اسْمِـهِ شَيْءٌ فِي الأَرْضِ وَلاَ فِي السَّمَـاءِ وَهُـوَ السَّمِـيعُ العَلِـيمُ.</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="3" data-max="3"><button class="count-btn" onclick="decrementCount(this)">٣</button></div>
+            <div class="virtue-text">(من قالها ثلاثاً إذا أصبح لم يضره شيء) رواه أبو داود، ٤/٣٢٣، برقم ٥٠٨٨، والترمذي، ٥/٤٦٥، برقم ٣٣٨٨، وابن ماجه، ٢/٣٣٢، وصححه الألباني في صحيح ابن ماجه، ٢/٣٣٢</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">رَضِيتُ بِاللَّهِ رَبّاً، وَبِالْإِسْلَامِ دِيناً، وَبِمُحَمَّدٍ نَبِيّاً</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="3" data-max="3"><button class="count-btn" onclick="decrementCount(this)">٣</button></div>
+            <div class="virtue-text">(حق على الله أن يرضيه) رواه مسلم، ٤/٢٠٩٢، برقم ٢٧٣٠</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text"> يَا حَـيُّ يَا قَيُّـومُ بِـرَحْـمَـتِكَ أَسْتَـغِـيثُ، أَصْلِـحْ لِي شَـأْنِـي كُلَّـهُ، وَلاَ تَكِلْـنِي إِلَى نَفْـسِي طَـرْفَةَ عَـيْنٍ. </div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="1" data-max="1"><button class="count-btn" onclick="decrementCount(this)">١</button></div>
+            <div class="virtue-text">(لا تكلني إلى نفسي) رواه الحاكم وصححه، ووافقه الذهبي، ١/٥٤٥، وانظر: صحيح الترغيب والترهيب، ١/٢٧٣</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">أَصْـبَحْنَا عَلَـى فِطْـرَةِ الإسْلاَمِ، وَعَلَـى كَلِـمَةِ الإخْـلاَصِ، وَعَلَـى دِينِ نَبِـيِّنَا مُحَـمَّدٍ وَعَلَى مِلَّـةِ أَبِينَـا إِبْـرَاهِيـمَ حَنِيـفاً مُسْلِـماً وَمَـا كَـانَ مِنَ المُشْـرِكِيـنَ.</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="1" data-max="1"><button class="count-btn" onclick="decrementCount(this)">١</button></div>
+            <div class="virtue-text">(فطرة الإسلام) رواه أحمد، ٣/ ٤٠٦، و٤٠٧، برقم ١٥٣٦٠، ورقم ١٥٥٦٣، وابن السني في عمل اليوم والليلة، برقم ٣٤، وانظر: صحيح الجامع، ٤/٢٠٩</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">سُبْحَانَ اللَّهِ وَبِحَمْدِهِ</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="100" data-max="100"><button class="count-btn" onclick="decrementCount(this)">١٠٠</button></div>
+            <div class="virtue-text">(من قالها مائة مرة حين يصبح وحين يمسي لم يأت أحد يوم القيامة بأفضل مما جاء به إلا أحد قال مثل ما قال أو زاد عليه) رواه مسلم، ٤/ ٢٠٧١ برقم ٢٦٩٢</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="10" data-max="10"><button class="count-btn" onclick="decrementCount(this)">١٠</button></div>
+            <div class="virtue-text">(عدل عشر رقاب) رواه النسائي في عمل اليوم والليلة، برقم ٢٤، وانظر: صحيح الترغيب والترهيب، ١/٢٧٢، وتحفة الأخيار لابن باز رحمه الله، ص٤٤</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">سُبْحَـانَ اللهِ وَبِحَمْـدِهِ عَدَدَ خَلْـقِهِ، وَرِضَـا نَفْسِـهِ، وَزِنَـةَ عَـرْشِـهِ، وَمِـدَادَ كَلِمَـاتِـهِ.</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="3" data-max="3"><button class="count-btn" onclick="decrementCount(this)">٣</button></div>
+            <div class="virtue-text">(أجر عظيم) رواه مسلم، ٤/ ٢٠٩٠، برقم ٢٧٢٦</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ.</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="100" data-max="100"><button class="count-btn" onclick="decrementCount(this)">١٠٠</button></div>
+            <div class="virtue-text">(الاستغفار يمحو الذنوب) رواه البخاري مع الفتح، ١١/ ١٠١، برقم ٦٣٠٧، ومسلم، ٤/ ٢٠٧٥، برقم ٢٧٠٢</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">اللَّهُمَّ صَلِّ وَ سَلِّمْ عَلَى نَبِيِّنَا مُحَمَّدٍ.</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="10" data-max="10"><button class="count-btn" onclick="decrementCount(this)">١٠</button></div>
+            <div class="virtue-text">(من صلّى عليَّ حين يصبح عشراً، وحين يمسي عشراً، أدركته شفاعتي يوم القيامة) أخرجه الطبراني بإسنادين: أحدهما جيد، انظر: مجمع الزوائد، ١٠/١٢٠، وصحيح الترغيب والترهيب، ١/٢٧٣</div>
+        </div>
+    </div>
+</div>
+
+<!-- ======================= قسم المساء (مطابق تماماً للصباح) ======================= -->
+<div id="eveningSection" class="dhikr-container">
+    <div style="text-align: center;">
+        <button class="back-home" onclick="goHome()">🏠 العودة للاختيار</button>
+        <div class="section-title">🌙 أذكار المساء 🌙</div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text"> أَعُوذُ بِاللهِ مِنَ الشَّيْطَانِ الرَّجِيم <br>
+            اللّهُ لاَ إِلَـهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ لاَ تَأْخُذُهُ سِنَةٌ وَلاَ نَوْمٌ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الأَرْضِ مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلاَّ بِإِذْنِهِ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ وَلاَ يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلاَّ بِمَا شَاءَ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالأَرْضَ وَلاَ يَؤُودُهُ حِفْظُهُمَا وَهُوَ الْعَلِيُّ الْعَظِيمُ. </div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="1" data-max="1"><button class="count-btn" onclick="decrementCount(this)">١</button></div>
+            <div class="virtue-text">(من قالها حين يمسي أجير من الجن حتى يصبح) رواه النسائي في عمل اليوم والليلة، وصححه الألباني في السلسلة الصحيحة ٣/٦٧</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text"> بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم <br> قُلْ هُوَ اللَّهُ أَحَدٌ، اللَّهُ الصَّمَدُ، لَمْ يَلِدْ وَلَمْ يُولَدْ، وَلَمْ يَكُنْ لَّهُ كُفُوًا أَحَدٌ. </div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="3" data-max="3"><button class="count-btn" onclick="decrementCount(this)">٣</button></div>
+            <div class="virtue-text">(تعدل ثلث القرآن) رواه مسلم، ٤/١٨٨٧، برقم ٢٥٧٦</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text"> بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم<br> قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ، مِنْ شَرِّ مَا خَلَقَ، وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ، وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ، وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ. </div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="3" data-max="3"><button class="count-btn" onclick="decrementCount(this)">٣</button></div>
+            <div class="virtue-text">(حصن من الشرور) رواه النسائي في عمل اليوم والليلة، وصححه الألباني</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text"> بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم <br> قُلْ أَعُوذُ بِرَبِّ النَّاسِ، مَلِكِ النَّاسِ، إِلَهِ النَّاسِ، مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ، الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ، مِنَ الْجِنَّةِ وَ النَّاسِ. </div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="3" data-max="3"><button class="count-btn" onclick="decrementCount(this)">٣</button></div>
+            <div class="virtue-text">(تحفظك من شر الوسواس الخناس) رواه النسائي في عمل اليوم والليلة</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">أَمْسَيْنَا وَأَمْسَى المُـلْكُ لله وَالحَمْدُ لله، لاَ إِلَهَ إِلاَّ اللّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ المُـلْكُ وَلَهُ الحَمْـدُ، وهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ. رَبِّ أسْـأَلُـكَ خَـيْرَ مَا فِي هَـذِهِ اللَّيْلَةِ وَخَـيْرَ مَا بَعْـدَهَا، وَأَعُـوذُ بِكَ مِنْ شَـرِّ مَا فِي هَـذِهِ اللَّيْلَةِ وَشَرِّ مَا بَعْـدَهَا، رَبِّ أَعُـوذُ بِكَ مِنَ الْكَسَـلِ وَسُـوءِ الْكِـبَرِ، رَبِّ أَعُـوذُ بِكَ مِنْ عَـذَابٍ فِي النَّـارِ وَعَـذَابٍ فِي القَـبْرِ.</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="1" data-max="1"><button class="count-btn" onclick="decrementCount(this)">١</button></div>
+            <div class="virtue-text">(خير الدنيا والآخرة) رواه مسلم، ٤/ ٢٠٨٨، برقم ٢٧٢٣</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">اللَّهُـمَّ بِكَ أَمْسَـيْنَا وَبِكَ أَصْـبَحْنَا، وَبِكَ نَحْـيَا وَبِكَ نَمُـوتُ وَإِلَـيْكَ النُّـشُورُ.</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="1" data-max="1"><button class="count-btn" onclick="decrementCount(this)">١</button></div>
+            <div class="virtue-text">(ختام اليوم بذكر الله) رواه الترمذي، ٤/١٤٢، برقم ٣٣٩١، وأبو داود، برقم ٥٠٦٨، وابن ماجه، برقم ٣٨٦٨، وصححه الألباني</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">اللَّهُمَّ أَنْتَ رَبِّي لاَ إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي، فَإِنَّهُ لاَ يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ.</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="1" data-max="1"><button class="count-btn" onclick="decrementCount(this)">١</button></div>
+            <div class="virtue-text">(من قالها موقناً حين يمسي فمات في ليلته دخل الجنة) رواه البخاري، ٧/١٥٠، برقم ٦٣٠٦</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">اللَّهُـمَّ إِنِّـي أَمْسَـيْتُ أُشْـهِدُكَ، وَأُشْـهِدُ حَمَلَـةَ عَـرْشِـكَ، وَمَلائِكَتَكَ، وَجَمِـيعَ خَلْـقِكَ، أَنَّـكَ أَنْـتَ اللهُ لاَ إِلَهَ إلاَّ أَنْـتَ وَحْـدَكَ لاَ شَرِيكَ لَـكَ، وَأَنَّ مُحَمَّـداً عَبْـدُكَ وَرَسُـولُـكَ.</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="4" data-max="4"><button class="count-btn" onclick="decrementCount(this)">٤</button></div>
+            <div class="virtue-text">(من قالها حين يمسي 4 مرات أعتقه الله من النار) رواه أحمد، ٤/٣٧١، وأبو داود، برقم ٥٠٦٩، وابن حبان، وصححه الألباني في صحيح الجامع، ٤/٢٠٨</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">اللَّهُـمَّ مَا أَمْسَـى بِي مِـنْ نِعْـمَةٍ أَوْ بِأَحَـدٍ مِـنْ خَلْـقِكَ، فَمِـنْكَ وَحْـدَكَ لاَ شَرِيكَ لَـكَ، فَلَـكَ الْحَمْـدُ وَلَـكَ الشُّكْـرُ.</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="1" data-max="1"><button class="count-btn" onclick="decrementCount(this)">١</button></div>
+            <div class="virtue-text">(من قالها حين يمسي فقد أدى شكر ليلته) رواه أبو داود، برقم ٥٠٧٣، والنسائي في عمل اليوم والليلة، رقم ٢١، وصححه ابن حبان</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لاَ إِلَهَ إِلاَّ أَنْتَ.</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="3" data-max="3"><button class="count-btn" onclick="decrementCount(this)">٣</button></div>
+            <div class="virtue-text">(صحة وعافية) رواه أبو داود، ٤/ ٣٢٤، برقم ٥٠٩٢، وأحمد، ٥/ ٤٢، برقم ٢٠٤٣٠، والنسائي في عمل اليوم والليلة، برقم ٢٢، وابن السني، برقم ٦٩، والبخاري في الأدب المفرد، برقم ٧٠١، وحسّن العلامة ابن باز رحمه الله إسناده في تحفة الأخيار، ص٢٦</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">حَسْبِيَ اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ، عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="7" data-max="7"><button class="count-btn" onclick="decrementCount(this)">٧</button></div>
+            <div class="virtue-text">(كفاه الله ما أهمه من أمر الدنيا والآخرة) رواه أبو داود، برقم ٥٠٨١، وابن السني، برقم ٧١، وصححه الألباني في صحيح الجامع، ٣/٢٦٤</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">اللَّهُـمَّ إِنِّـي أسْـأَلُـكَ العَـفْوَ وَالعَـافِـيَةَ فِي الدُّنْـيَا وَالآخِـرَةِ، اللَّهُـمَّ إِنِّـي أسْـأَلُـكَ العَـفْوَ وَالعَـافِـيَةَ فِي دِينِي وَدُنْـيَايَ وَأهْـلِي وَمَالِـي، اللَّهُـمَّ اسْتُـرْ عَـوْرَاتِي وَآمِـنْ رَوْعَاتِـي، اللَّهُـمَّ احْفَظْـنِي مِنْ بَـيْنِ يَدَيَّ وَمِنْ خَلْفِـي وَعَنْ يَمِـينِي وَعَنْ شِمَـالِي، وَمِنْ فَوْقِـي، وَأَعُـوذُ بِعَظَمَـتِكَ أَنْ أُغْـتَالَ مِنْ تَحْتِـي.</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="1" data-max="1"><button class="count-btn" onclick="decrementCount(this)">١</button></div>
+            <div class="virtue-text">(حفظ شامل) رواه أبو داود، برقم ٥٠٧٤، وابن ماجه، برقم ٣٨٧١، وانظر: صحيح ابن ماجه، ٢/٣٣٢</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">اللَّهُـمَّ عَالِـمَ الغَـيْبِ وَالشّـهَادَةِ فَاطِـرَ السَّمَاوَاتِ وَالأَرْضِ رَبَّ كُـلِّ شَـيْءٍ وَمَلِيـكَهُ، أَشْهَـدُ أَنْ لاَ إِلَـهَ إِلاَّ أَنْتَ، أَعُـوذُ بِكَ مِنْ شَـرِّ نَفْسِـي وَمِنْ شَـرِّ الشَّيْـطَانِ وَشِـرْكِهِ، وَأَنْ أَقْتَـرِفَ عَلَـى نَفْسِـي سُوأً أَوْ أَجُـرَّهُ إِلَـى مُسْـلِمٍ.</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="1" data-max="1"><button class="count-btn" onclick="decrementCount(this)">١</button></div>
+            <div class="virtue-text">(حصن عظيم) رواه الترمذي، برقم ٣٣٩٢، وأبو داود، برقم ٥٠٦٧، وانظر: صحيح الترمذي، ٣/١٤٢</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">بِسـمِ اللهِ الذِي لاَ يَضُـرُّ مَعَ اسْمِـهِ شَيْءٌ فِي الأَرْضِ وَلاَ فِي السَّمَـاءِ وَهُـوَ السَّمِـيعُ العَلِـيمُ.</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="3" data-max="3"><button class="count-btn" onclick="decrementCount(this)">٣</button></div>
+            <div class="virtue-text">(من قالها ثلاثاً إذا أمسى لم يضره شيء) رواه أبو داود، ٤/٣٢٣، برقم ٥٠٨٨، والترمذي، ٥/٤٦٥، برقم ٣٣٨٨، وابن ماجه، ٢/٣٣٢، وصححه الألباني في صحيح ابن ماجه، ٢/٣٣٢</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">رَضِيتُ بِاللَّهِ رَبّاً، وَبِالْإِسْلَامِ دِيناً، وَبِمُحَمَّدٍ نَبِيّاً</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="3" data-max="3"><button class="count-btn" onclick="decrementCount(this)">٣</button></div>
+            <div class="virtue-text">(حق على الله أن يرضيه) رواه مسلم، ٤/٢٠٩٢، برقم ٢٧٣٠</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text"> يَا حَـيُّ يَا قَيُّـومُ بِـرَحْـمَـتِكَ أَسْتَـغِـيثُ، أَصْلِـحْ لِي شَـأْنِـي كُلَّـهُ، وَلاَ تَكِلْـنِي إِلَى نَفْـسِي طَـرْفَةَ عَـيْنٍ. </div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="1" data-max="1"><button class="count-btn" onclick="decrementCount(this)">١</button></div>
+            <div class="virtue-text">(لا تكلني إلى نفسي) رواه الحاكم وصححه، ووافقه الذهبي، ١/٥٤٥، وانظر: صحيح الترغيب والترهيب، ١/٢٧٣</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">أَمْسَيْنَا عَلَـى فِطْـرَةِ الإسْلاَمِ، وَعَلَـى كَلِـمَةِ الإخْـلاَصِ، وَعَلَـى دِينِ نَبِـيِّنَا مُحَـمَّدٍ وَعَلَى مِلَّـةِ أَبِينَـا إِبْـرَاهِيـمَ حَنِيـفاً مُسْلِـماً وَمَـا كَـانَ مِنَ المُشْـرِكِيـنَ.</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="1" data-max="1"><button class="count-btn" onclick="decrementCount(this)">١</button></div>
+            <div class="virtue-text">(فطرة الإسلام) رواه أحمد، ٣/ ٤٠٦، و٤٠٧، برقم ١٥٣٦٠، ورقم ١٥٥٦٣، وابن السني في عمل اليوم والليلة، برقم ٣٤، وانظر: صحيح الجامع، ٤/٢٠٩</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">سُبْحَانَ اللَّهِ وَبِحَمْدِهِ</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="100" data-max="100"><button class="count-btn" onclick="decrementCount(this)">١٠٠</button></div>
+            <div class="virtue-text">(من قالها مائة مرة حين يمسي لم يأت أحد يوم القيامة بأفضل مما جاء به إلا أحد قال مثل ما قال أو زاد عليه) رواه مسلم، ٤/ ٢٠٧١ برقم ٢٦٩٢</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="10" data-max="10"><button class="count-btn" onclick="decrementCount(this)">١٠</button></div>
+            <div class="virtue-text">(عدل عشر رقاب) رواه النسائي في عمل اليوم والليلة، برقم ٢٤، وانظر: صحيح الترغيب والترهيب، ١/٢٧٢، وتحفة الأخيار لابن باز رحمه الله، ص٤٤</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">سُبْحَـانَ اللهِ وَبِحَمْـدِهِ عَدَدَ خَلْـقِهِ، وَرِضَـا نَفْسِـهِ، وَزِنَـةَ عَـرْشِـهِ، وَمِـدَادَ كَلِمَـاتِـهِ.</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="3" data-max="3"><button class="count-btn" onclick="decrementCount(this)">٣</button></div>
+            <div class="virtue-text">(أجر عظيم) رواه مسلم، ٤/ ٢٠٩٠، برقم ٢٧٢٦</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ.</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="100" data-max="100"><button class="count-btn" onclick="decrementCount(this)">١٠٠</button></div>
+            <div class="virtue-text">(الاستغفار يمحو الذنوب) رواه البخاري مع الفتح، ١١/ ١٠١، برقم ٦٣٠٧، ومسلم، ٤/ ٢٠٧٥، برقم ٢٧٠٢</div>
+        </div>
+    </div>
+
+    <div class="dhikr-card">
+        <div class="dhikr-text">اللَّهُمَّ صَلِّ وَ سَلِّمْ عَلَى نَبِيِّنَا مُحَمَّدٍ.</div>
+        <div class="counter-row">
+            <div class="count-wrapper" data-current="10" data-max="10"><button class="count-btn" onclick="decrementCount(this)">١٠</button></div>
+            <div class="virtue-text">(من صلّى عليَّ حين يمسي عشراً، أدركته شفاعتي يوم القيامة) أخرجه الطبراني بإسنادين: أحدهما جيد، انظر: مجمع الزوائد، ١٠/١٢٠، وصحيح الترغيب والترهيب، ١/٢٧٣</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function decrementCount(btn) {
+        let wrapper = btn.parentElement;
+        let currentVal = parseInt(wrapper.getAttribute('data-current'));
+        if (isNaN(currentVal) || currentVal <= 0) return;
+        let newVal = currentVal - 1;
+        wrapper.setAttribute('data-current', newVal);
+        if (newVal === 0) {
+            let checkSpan = document.createElement('div');
+            checkSpan.className = 'check-complete';
+            checkSpan.innerHTML = '✅';
+            wrapper.innerHTML = '';
+            wrapper.appendChild(checkSpan);
+        } else {
+            btn.innerText = newVal;
+        }
+    }
+
+    function showMorning() {
+        document.getElementById('choiceScreen').style.display = 'none';
+        document.getElementById('morningSection').style.display = 'block';
+        document.getElementById('eveningSection').style.display = 'none';
+    }
+
+    function showEvening() {
+        document.getElementById('choiceScreen').style.display = 'none';
+        document.getElementById('morningSection').style.display = 'none';
+        document.getElementById('eveningSection').style.display = 'block';
+    }
+
+    function goHome() {
+        document.getElementById('choiceScreen').style.display = 'block';
+        document.getElementById('morningSection').style.display = 'none';
+        document.getElementById('eveningSection').style.display = 'none';
+    }
+</script>
+<footer>📿 اللهم تقبل منا صالح الأعمال</footer>
+</body>
+</html>
